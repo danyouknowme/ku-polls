@@ -5,5 +5,5 @@ A web application to conduct polls or surveys within [Kasetsart University](http
 
 ## Project Document
   - [Wiki Home](https://github.com/danyouknowme/ku-polls/wiki)
-  - [Vision Statement]()
-  - [Requirement]()
+  - [Vision Statement](https://github.com/danyouknowme/ku-polls/wiki/Vision-Statement)
+  - [Requirement](https://github.com/danyouknowme/ku-polls/wiki/Requirements)
