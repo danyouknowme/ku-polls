@@ -5,19 +5,18 @@
     {% csrf_token %}
     {% for choice in question.choice_set.all %}
         <div>
-            <input 
-                type="radio" 
+            <button
+                type="submit" 
                 name="choice" 
                 id="choice{{ forloop.counter }}" 
                 value="{{ choice.id }}"
             >
+                votes
+            </button>
             <label for="choice{{ forloop.counter }}">
                 {{ choice.choice_text }}
             </label>
         </div>
-        <!-- <a href={% url 'polls:index'%}></a> -->
     {% endfor %}
-    <input type="submit" value="Vote">
-    <br>
     <a href="{% url 'polls:index' %}">Back to List of Polls</a>
 </form>
