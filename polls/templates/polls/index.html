@@ -4,7 +4,7 @@
 
 {% if messages %}
     {% for message in messages %}
-    <div class="alert alert-warning {{ message.info }}" role="alert">
+    <div role="alert">
         {{ message }}
     </div>
     {% endfor %}
@@ -13,7 +13,14 @@
 {% if latest_question_list %}
     <ul>
         {% for question in latest_question_list %}
-            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+            <!-- <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li> -->
+            <div>
+                <span>{{ question.question_text }}</span>
+                {% if question.can_vote %}
+                    <a href="{% url 'polls:detail' question.id %}">Vote</a>
+                {% endif %}
+                <a href="{% url 'polls:results' question.id %}">Results</a>
+            </div>
         {% endfor %}
     </ul>
 {% else %}
