@@ -20,6 +20,16 @@ class Question(models.Model):
     was_published_recently.boolean = True
     was_published_recently.short_description = "Published recently ?"
 
+    def is_published(self):
+        """Check the current date is on the published date
+
+        Returns:
+            bool: True if the current date is on published date, False otherwise
+        """
+        now = timezone.now()
+        return now >= self.pub_date
+
+
     def __str__(self):
         return self.question_text
 
