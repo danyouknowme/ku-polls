@@ -19,7 +19,7 @@ class QuestionModelTests(TestCase):
     def test_was_published_recently_with_future_question(self):
         """
         was_published_recently() returns False
-        for questions whose pub_date 
+        for questions whose pub_date is in the future
         """
         time = timezone.now() + datetime.timedelta(days=30)
         future_question = Question(pub_date=time)
@@ -36,12 +36,36 @@ class QuestionModelTests(TestCase):
 
     def test_was_published_recently_with_recent_question(self):
         """
-        was_published_recently() reutnr True
+        was_published_recently() returns True
         for questions whose pub_date is within the last_day
         """
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
+
+    def test_is_published_with_future_question(self):
+        """
+        is_published() returns False
+        for question whose pub_date is in the future
+        """
+        future_question = create_question("Future Question", 15)
+        self.assertFalse(future_question.is_published())
+
+    def test_is_published_with_old_question(self):
+        """
+        is_published() returns True
+        for question whose pub_date is older than the current date
+        """
+        older_question = create_question("Older Question", -1)
+        self.assertTrue(older_question.is_published())
+
+    def test_is_published_with_recent_question(self):
+        """
+        is_published() returns True
+        for question whose pub_date is on current date
+        """
+        recent_question = create_question("Recent Question", 0)
+        self.assertTrue(recent_question.is_published())
 
 class QuestionIndexViewTests(TestCase):
     def test_no_question(self):
