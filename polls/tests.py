@@ -67,6 +67,36 @@ class QuestionModelTests(TestCase):
         recent_question = create_question("Recent Question", 0)
         self.assertTrue(recent_question.is_published())
 
+    def test_can_vote_with_future_question(self):
+        """
+        can_vote() returns False
+        for question whose current date is after a poll period time
+        """
+        pub_date = timezone.now() + datetime.timedelta(days=5)
+        end_date = timezone.now() + datetime.timedelta(days=5)
+        future_question = Question("Future Question", pub_date=pub_date, end_date=end_date)
+        self.assertFalse(future_question.can_vote())
+
+    def test_can_vote_with_old_question(self):
+        """
+        can_vote() returns False
+        for question whose current date is before a poll period time
+        """
+        pub_date = timezone.now() - datetime.timedelta(days=5)
+        end_date = timezone.now() - datetime.timedelta(days=5)
+        old_question = Question("Old Question", pub_date=pub_date, end_date=end_date)
+        self.assertFalse(old_question.can_vote())
+
+    def test_can_vote_with_recent_question(self):
+        """
+        can_vote() return True
+        for question whose current date is between the published date and the end date
+        """
+        pub_date = timezone.now() - datetime.timedelta(days=15)
+        end_date = timezone.now() + datetime.timedelta(days=15)
+        recent_question = Question("Question on time", pub_date=pub_date, end_date=end_date)
+        self.assertTrue(recent_question.can_vote())
+
 class QuestionIndexViewTests(TestCase):
     def test_no_question(self):
         """
