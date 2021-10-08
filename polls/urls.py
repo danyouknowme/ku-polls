@@ -1,3 +1,4 @@
+"""The urls to link to each page of polls application."""
 from django.urls import path
 
 from . import views
