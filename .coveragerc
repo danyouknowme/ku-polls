@@ -8,3 +8,4 @@ omit =
     polls/tests.py
     polls/migrations/*
     venv
+    manage.py
