@@ -10,7 +10,7 @@ class Question(models.Model):
 
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
-    end_date = models.DateTimeField('date ended', default=timezone.now())
+    end_date = models.DateTimeField('date ended', default=timezone.now)
 
     def was_published_recently(self):
         """Check the question was published recently.
