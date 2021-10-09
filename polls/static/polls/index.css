@@ -1,0 +1,20 @@
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #fff;
+}
+.text {
+    cursor: not-allowed;
+}
+.col {
+    padding: 5px;
+}
+
+.navbar-box-shadow {
+    box-shadow: -1px 7px 7px -1px rgba(0,0,0,0.16);
+    -webkit-box-shadow: -1px 7px 7px -1px rgba(0,0,0,0.16);
+    -moz-box-shadow: -1px 7px 7px -1px rgba(0,0,0,0.16);
+}

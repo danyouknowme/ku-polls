@@ -1,0 +1,24 @@
+.btn {
+    margin: 10px 7px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.choice {
+    padding: 7px;
+    display: flex;
+    justify-content: space-between;
+    width: 20%;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+a:hover {
+    color: #fff;
+}
