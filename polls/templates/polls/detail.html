@@ -10,20 +10,20 @@
     <form action="{% url 'polls:vote' question.id %}" method="post">
         {% csrf_token %}
         {% for choice in question.choice_set.all %}
-            <div class="choice">
-                <button
-                    type="button" 
-                    name="choice" 
-                    id="choice{{ forloop.counter }}" 
-                    value="{{ choice.id }}"
-                    class="btn btn-info"
-                >
-                    votes
-                </button>
-                <label for="choice{{ forloop.counter }}">
-                    {{ choice.choice_text }}
-                </label>
-            </div>
+        <div class="choice">
+            <button
+                type="input" 
+                name="choice" 
+                id="choice{{ forloop.counter }}" 
+                value="{{ choice.id }}"
+                class="btn btn-info"
+            >
+            vote
+            </button>
+            <label for="choice{{ forloop.counter }}">
+                {{ choice.choice_text }}
+            </label>
+        </div>
         {% endfor %}
         <button type="button" class="btn btn-warning"><a href="{% url 'polls:index' %}">Back to List of Polls</a></button>
     </form>
