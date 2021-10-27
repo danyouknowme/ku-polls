@@ -58,6 +58,11 @@ class Choice(models.Model):
         """Return the content of choice text."""
         return self.choice_text
 
+    @property
+    def votes(self):
+        """Return the number of votes on the choice of polls question."""
+        return Vote.objects.filter(choice=self).count()
+
 
 class Vote(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, default=0)
