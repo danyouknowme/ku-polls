@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from .models import Question, Choice
 
@@ -20,7 +21,6 @@ class IndexView(generic.ListView):
         return Question.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
-
 
 def detail(request, question_id):
     """Question detail page represent the question text and choice to vote."""
@@ -38,6 +38,7 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+@login_required
 def vote(request, question_id):
     """Increase a value of vote and save to vote result."""
     question = get_object_or_404(Question, pk=question_id)
