@@ -5,15 +5,24 @@
     <link rel="stylesheet" type="text/css" href="{% static 'polls/index.css' %}">
 {% endblock css%}
 {% block nav %}
-    <nav class="navbar navbar-light bg-light navbar-box-shadow">
-        <a class="navbar-brand" href="#" style="display: flex; align-items: center;">
-        <img src="{% static 'polls/KU_Logo_PNG.png' %}" width="60" height="60" class="d-inline-block align-top" alt="" style="margin: 0 20px;">
-        <span style="font-size: 32px; font-weight: 700; color: rgb(82, 82, 82)">KU Polls</span>
-        </a>
+    <nav class="navbar navbar-light bg-light navbar-box-shadow justify-content-between">
+        <div>
+            <a class="navbar-brand" href="#" style="display: flex; align-items: center;">
+                <img src="{% static 'polls/KU_Logo_PNG.png' %}" width="60" height="60" class="d-inline-block align-top" alt="" style="margin: 0 20px;">
+                <span style="font-size: 32px; font-weight: 700; color: rgb(82, 82, 82)">KU Polls</span>
+            </a>
+        </div>
+        <div>
+            {% if user.is_authenticated %}
+                <span>Hello, {{ user.username }}</span>
+                <a href="{% url 'logout'%}" style="color: red;">Logout</a>
+            {% else %}
+                <a href="{% url 'login'%}" style="color: red;">Login</a>
+            {% endif %}
+        </div>
     </nav>
 {% endblock nav %}
 {% block content %}
-
 
     <!-- {% if messages %}
         {% for message in messages %}
