@@ -11,8 +11,8 @@ def signup(request):
             username = form.cleaned_data.get('username')
             raw_passwd = form.cleaned_data.get('password')
             user = authenticate(username=username,password=raw_passwd)
-            login(request, user)
-        return redirect('polls')
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+        return redirect('polls:index')
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
