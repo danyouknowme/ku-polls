@@ -28,7 +28,8 @@ def detail(request, question_id):
     if not question.can_vote():
         messages.error(request, 'Voting is not allowed!')
         return redirect('polls:index')
-    return render(request, 'polls/detail.html', {'question': question})
+    prev_choice = question.vote_set.get(user=request.user).choice
+    return render(request, 'polls/detail.html', {'question': question, 'previous_choice': prev_choice})
 
 
 class ResultsView(generic.DetailView):
@@ -50,8 +51,12 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice."
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        if question.vote_set.filter(user=request.user).exists():
+            vote = question.vote_set.get(user=request.user)
+            vote.choice = selected_choice
+            vote.save()
+        else:
+            selected_choice.vote_set.create(user=request.user, question=question)
         return HttpResponseRedirect(
             reverse('polls:results', args=(question.id,))
         )
