@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from .models import Question, Choice
+from .models import Question, Choice, Vote
 
 
 class IndexView(generic.ListView):
@@ -28,7 +28,10 @@ def detail(request, question_id):
     if not question.can_vote():
         messages.error(request, 'Voting is not allowed!')
         return redirect('polls:index')
-    prev_choice = question.vote_set.get(user=request.user).choice
+    try:
+        prev_choice = question.vote_set.get(user=request.user).choice
+    except (KeyError, Vote.DoesNotExist):
+        return render(request, 'polls/detail.html', {'question': question})
     return render(request, 'polls/detail.html', {'question': question, 'previous_choice': prev_choice})
 
 
