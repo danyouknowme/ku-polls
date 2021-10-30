@@ -2,40 +2,36 @@
 {% load static %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'polls/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/css/index.css' %}">
 {% endblock css%}
 {% block nav %}
     <nav class="navbar navbar-light bg-light navbar-box-shadow justify-content-between">
         <div>
-            <a class="navbar-brand" href="#" style="display: flex; align-items: center;">
-                <img src="{% static 'polls/KU_Logo_PNG.png' %}" width="60" height="60" class="d-inline-block align-top" alt="" style="margin: 0 20px;">
+            <a class="d-flex align-items-center navbar-brand" href="#">
+                <img src="{% static 'polls/KU_Logo_PNG.png' %}" width="60" height="60" class="d-inline-block align-top" alt="logo">
                 <span style="font-size: 32px; font-weight: 700; color: rgb(82, 82, 82)">KU Polls</span>
             </a>
         </div>
         <div>
             {% if user.is_authenticated %}
                 <span>Hello, {{ user.username }}</span>
-                <a href="{% url 'logout'%}" style="color: red;">Logout</a>
+                <a href="{% url 'logout'%}" class="logout-btn">
+                    <button type="button" class="btn btn-outline-danger">Logout</button>
+                </a>
             {% else %}
-                <a href="{% url 'login'%}" style="color: red;">Login</a>
+                <a href="{% url 'login'%}" class="login-btn">Login</a>
+                <a href="{% url 'signup'%}">
+                    <button type="button" class="btn btn-secondary">Signup</button>
+                </a>
             {% endif %}
         </div>
     </nav>
 {% endblock nav %}
 {% block content %}
 
-    <!-- {% if messages %}
-        {% for message in messages %}
-        <div role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-    {% endif %} -->
-
     {% if latest_question_list %}
         <ul>
             {% for question in latest_question_list %}
-                <!-- <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>    -->
                 <div class="container">
                     <div class="row">
                         <div class="col">
@@ -44,8 +40,11 @@
                         <div class="col col-lg-2">
                             {% if question.can_vote %}
                                 <div>
-                                    <!-- <a href="{% url 'polls:detail' question.id %}">Vote</a> -->
-                                    <button type="button" class="btn btn-primary"><a href="{% url 'polls:detail' question.id %}">Vote</a></button>
+                                    {% if user.is_authenticated %}
+                                        <button type="button" class="btn btn-primary"><a href="{% url 'polls:detail' question.id %}">Vote</a></button>
+                                    {% else %}
+                                        <button type="button" class="btn btn-primary"><a href="{% url 'login' %}">Vote</a></button>
+                                    {% endif %}
                                 </div>
                             {% else %}
                                 <div>
@@ -58,22 +57,6 @@
                         </div>
                     </div>
                 </div>
-                    <!-- <div class="question">
-                        <span>{{ question.question_text }}</span>
-                    </div>
-                    {% if question.can_vote %}
-                        <div>
-                            <a href="{% url 'polls:detail' question.id %}">Vote</a>
-                        </div>
-                    {% else %}
-                        <div>
-                            <a href="{% url 'polls:detail' question.id %}">Unvote</a>
-                        </div>
-                    {% endif %}
-                    <div>
-                        <a href="{% url 'polls:results' question.id %}">Results</a>
-                    </div>
-                </div> -->
             {% endfor %}
         </ul>
     {% else %}
