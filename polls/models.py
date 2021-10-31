@@ -65,6 +65,8 @@ class Choice(models.Model):
 
 
 class Vote(models.Model):
+    """Vote model to collect amount of vote for user."""
+
     question = models.ForeignKey(Question, on_delete=models.CASCADE, default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=0)
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE, default=0)

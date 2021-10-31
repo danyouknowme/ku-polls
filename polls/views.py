@@ -22,6 +22,7 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
 
+
 def detail(request, question_id):
     """Question detail page represent the question text and choice to vote."""
     question = get_object_or_404(Question, pk=question_id)

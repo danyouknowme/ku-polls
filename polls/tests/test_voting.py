@@ -1,3 +1,4 @@
+"""Tests for user voting."""
 import datetime
 
 from django.test import TestCase
@@ -6,6 +7,7 @@ from django.shortcuts import reverse
 from django.contrib.auth.models import User
 
 from polls.models import Question
+
 
 class VotingTest(TestCase):
     """Test cases for voting the polls."""
@@ -35,7 +37,7 @@ class VotingTest(TestCase):
         self.assertEqual(response.status_code, 200)
         response = self.client.post(url, {'choice': 2})
         self.assertTrue(self.question.vote_set.filter(question=self.question).exists)
-        self.assertEqual(response.status_code, 302) 
+        self.assertEqual(response.status_code, 302)
 
     def test_unauthenticated_vote(self):
         """The vote will be restrict for unauthenticated user."""

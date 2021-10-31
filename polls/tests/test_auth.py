@@ -1,12 +1,14 @@
-from django.test import Client, TestCase
+"""Tests for user authentication."""
+from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
-from polls.models import Question, Choice
-from django.utils import timezone
+
 
 class UserAuthTest(TestCase):
+    """Test for authenticated user."""
 
     def setUp(self):
+        """Initialize the user for test."""
         # superclass setUp creates a Client object and initializes database
         super().setUp()
         self.user = {
