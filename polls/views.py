@@ -5,8 +5,9 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-from .models import Question, Choice
+from .models import Question, Choice, Vote
 
 
 class IndexView(generic.ListView):
@@ -21,14 +22,17 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
 
-
 def detail(request, question_id):
     """Question detail page represent the question text and choice to vote."""
     question = get_object_or_404(Question, pk=question_id)
     if not question.can_vote():
         messages.error(request, 'Voting is not allowed!')
         return redirect('polls:index')
-    return render(request, 'polls/detail.html', {'question': question})
+    try:
+        prev_choice = question.vote_set.get(user=request.user).choice
+    except (KeyError, Vote.DoesNotExist):
+        return render(request, 'polls/detail.html', {'question': question})
+    return render(request, 'polls/detail.html', {'question': question, 'previous_choice': prev_choice})
 
 
 class ResultsView(generic.DetailView):
@@ -38,6 +42,7 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+@login_required
 def vote(request, question_id):
     """Increase a value of vote and save to vote result."""
     question = get_object_or_404(Question, pk=question_id)
@@ -49,8 +54,12 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice."
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        if question.vote_set.filter(user=request.user).exists():
+            vote = question.vote_set.get(user=request.user)
+            vote.choice = selected_choice
+            vote.save()
+        else:
+            selected_choice.vote_set.create(user=request.user, question=question)
         return HttpResponseRedirect(
             reverse('polls:results', args=(question.id,))
         )
