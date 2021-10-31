@@ -11,4 +11,4 @@ A web application to conduct polls or surveys within [Kasetsart University](http
   
   - [Iteration 1 Plan](https://github.com/danyouknowme/ku-polls/wiki/Iteration-1-Plan)<br>
   - [Iteration 2 Plan](https://github.com/danyouknowme/ku-polls/wiki/Iteration-2-Plan)<br>
-  - [Iteration 3 Plan](https://github.com/danyouknowme/ku-polls/wiki/Iteration-3-Plan)  
+  - [Iteration 3 Plan](https://github.com/danyouknowme/ku-polls/wiki/Iteration-3-Plan)
