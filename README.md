@@ -1,6 +1,6 @@
 # KU Polls
 [![Build Status](https://app.travis-ci.com/danyouknowme/ku-polls.svg?branch=iteration2)](https://app.travis-ci.com/danyouknowme/ku-polls)
-[![codecov](https://codecov.io/gh/danyouknowme/ku-polls/branch/iteration2/graph/badge.svg?token=21YHPV23YA)](https://codecov.io/gh/danyouknowme/ku-polls)
+[![codecov](https://codecov.io/gh/danyouknowme/ku-polls/branch/master/graph/badge.svg?token=21YHPV23YA)](https://codecov.io/gh/danyouknowme/ku-polls)
 <br>
 A web application to conduct polls or surveys within [Kasetsart University](https://www.ku.ac.th/th).
 
